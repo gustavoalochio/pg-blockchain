@@ -1,0 +1,25 @@
+version: "3.7"
+services:
+  runtime:
+    build: ./runtime
+    ports:
+      - "8888:8888"
+      - "4433:4433"
+      - "4422:4422"
+      - "2210:2210"
+      - "4444:4444"
+    networks: 
+      - "empower"
+  ryu:
+    build: ./ryu
+    ports:
+      - "8080:8080"
+      - "6633:6633"
+      - "6653:6653"
+    depends_on:
+      - "runtime"
+    networks: 
+      - "empower"
+networks:
+  empower:
+    driver: "bridge"
