@@ -2,9 +2,8 @@ from bridge import Bridge
 
 
 class Adapter:
-    base_url = 'https://min-api.cryptocompare.com/data/price'
-    from_params = ['base', 'from', 'coin']
-    to_params = ['quote', 'to', 'market']
+    base_url = 'http://root:root@54.232.62.226:8888/api/v1/wtps'
+    from_params = ['id']
 
     def __init__(self, input):
         self.id = input.get('id', '1')
@@ -28,21 +27,21 @@ class Adapter:
             self.from_param = self.request_data.get(param)
             if self.from_param is not None:
                 break
-        for param in self.to_params:
-            self.to_param = self.request_data.get(param)
-            if self.to_param is not None:
-                break
+        # for param in self.to_params:
+        #     self.to_param = self.request_data.get(param)
+        #     if self.to_param is not None:
+        #         break
 
     def create_request(self):
         try:
             params = {
-                'fsym': self.from_param,
-                'tsyms': self.to_param,
+                '': self.from_param,
             }
             response = self.bridge.request(self.base_url, params)
-            data = response.json()
-            self.result = data[self.to_param]
-            data['result'] = self.result
+            data = response.json()[0]
+            print(data)
+            # self.result = data
+            # data['result'] = self.result
             self.result_success(data)
         except Exception as e:
             self.result_error(e)
@@ -53,7 +52,7 @@ class Adapter:
         self.result = {
             'jobRunID': self.id,
             'data': data,
-            'result': self.result,
+            'result': data,
             'statusCode': 200,
         }
 
