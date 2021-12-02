@@ -1,1 +1,2 @@
-chainlink/chainlink-volume/
+chainlink/.env
+chainlink/chainlink-volume/*
