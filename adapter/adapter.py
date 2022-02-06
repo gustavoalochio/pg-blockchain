@@ -2,7 +2,7 @@ from bridge import Bridge
 
 
 class Adapter:
-    base_url = 'http://root:root@18.230.82.62:8888/api/v1/wtps'
+    base_url = 'http://root:root@18.229.125.61:8888/api/v1/wtps'
     from_params = ['id']
 
     def __init__(self, input):
@@ -37,6 +37,7 @@ class Adapter:
             params = {
                 '': self.from_param,
             }
+            print("teste")
             response = self.bridge.request(self.base_url, params)
             data = response.json()[0]
             print(data)
