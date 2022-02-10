@@ -2,7 +2,7 @@ from bridge import Bridge
 
 
 class Adapter:
-    base_url = 'http://root:root@54.94.105.9:8888/api/v1/wtps'
+    base_url = 'http://root:root@localhost:8888/api/v1/wtps'
     from_params = ['id']
 
     def __init__(self, input):
