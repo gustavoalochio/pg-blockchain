@@ -40,6 +40,7 @@ class Adapter:
             response = self.bridge.request(self.base_url, params)
             data = response.json()[0]
             print(data)
+            print(data['addr'])
             # self.result = data
             # data['result'] = self.result
             self.result_success(data)
@@ -49,12 +50,7 @@ class Adapter:
             self.bridge.close()
 
     def result_success(self, data):
-        self.result = {
-            'jobRunID': self.id,
-            'data': data,
-            'result': data,
-            'statusCode': 200,
-        }
+        self.result = data['addr']
 
     def result_error(self, error):
         self.result = {
