@@ -50,7 +50,7 @@ class Adapter:
             self.bridge.close()
 
     def result_success(self, data):
-        self.result = data['addr']
+        self.result = bytes(data['addr'], 'utf-8')
 
     def result_error(self, error):
         self.result = {
