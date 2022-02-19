@@ -1,0 +1,59 @@
+version: "3.7"
+services:
+
+  #5G EmPOWER
+  runtime:
+    build: ./5g-empower/runtime
+    ports:
+      - "8888:8888"
+      - "4433:4433"
+      - "4422:4422"
+      - "2210:2210"
+      - "4444:4444"
+    networks: 
+      - "empower"
+  ryu:
+    build: ./5g-empower/ryu
+    ports:
+      - "8080:8080"
+      - "6633:6633"
+      - "6653:6653"
+    depends_on:
+      - "runtime"
+    networks: 
+      - "empower"
+  
+  # Node Operator
+  pg_chainlink:
+    image: "postgres"
+    ports:
+      - "5432:5432"
+    env_file:
+      - database.env
+    volumes:
+      # [PATH_TO_POSTGRES_DATA]:/var/lib/postgressql/data/
+      - ~/pg-blockchain/chainlink/chainlink-volume/data/:/var/lib/postgresql/data/
+  chainlink:
+    image: "smartcontract/chainlink:1.0.0"
+    env_file: .env
+    depends_on:
+      - pg_chainlink
+    ports:
+      - "6688:6688"
+    volumes:
+      # [PATH_TO_REPO_CHAINLINK_VOLUME]:/chainlink/
+      - ~/pg-blockchain/chainlink/chainlink-volume/:/chainlink/
+    command: node start --password /chainlink/password.txt --api /chainlink/apicredentials.txt 
+
+  #Adapter
+  adapter:
+    build: ./adapter
+    ports:
+      - "8081:8081"
+    networks: 
+      - "empower"
+
+
+networks:
+  empower:
+    driver: "bridge"
