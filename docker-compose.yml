@@ -29,7 +29,7 @@ services:
     ports:
       - "5432:5432"
     env_file:
-      - database.env
+      - ./chainlink/database.env
     volumes:
       # [PATH_TO_POSTGRES_DATA]:/var/lib/postgressql/data/
       - ./chainlink/chainlink-volume/data/:/var/lib/postgresql/data/
