@@ -32,7 +32,7 @@ services:
       - database.env
     volumes:
       # [PATH_TO_POSTGRES_DATA]:/var/lib/postgressql/data/
-      - ~/pg-blockchain/chainlink/chainlink-volume/data/:/var/lib/postgresql/data/
+      - ./chainlink/chainlink-volume/data/:/var/lib/postgresql/data/
   chainlink:
     image: "smartcontract/chainlink:1.0.0"
     env_file: .env
@@ -42,7 +42,7 @@ services:
       - "6688:6688"
     volumes:
       # [PATH_TO_REPO_CHAINLINK_VOLUME]:/chainlink/
-      - ~/pg-blockchain/chainlink/chainlink-volume/:/chainlink/
+      - ./chainlink/chainlink-volume/:/chainlink/
     command: node start --password /chainlink/password.txt --api /chainlink/apicredentials.txt 
 
   #Adapter
@@ -50,9 +50,10 @@ services:
     build: ./adapter
     ports:
       - "8081:8081"
+    volumes:
+      - ./adapter:/app
     networks: 
       - "empower"
-
 
 networks:
   empower:
