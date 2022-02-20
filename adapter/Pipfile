@@ -7,8 +7,9 @@ verify_ssl = true
 pytest = "*"
 
 [packages]
-requests = "==2.23.0"
-Flask = "==1.1.1"
+requests = "==2.27.1"
+Flask = "==2.0.3 "
+ipfshttpclient = "==0.7.0"
 
 [requires]
-python_version = "3.7"
+python_version = "3.8.12"

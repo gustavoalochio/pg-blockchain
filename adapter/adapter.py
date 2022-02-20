@@ -1,5 +1,5 @@
 from bridge import Bridge
-import ipfshttpclient
+# import ipfshttpclient
 
 class Adapter:
     base_url = 'http://root:root@runtime:8888/api/v1/wtps'
