@@ -35,6 +35,7 @@ class Adapter:
     def upload_json(self, fileJson):
         client = ipfshttpclient.connect("/dns/ipfs/tcp/5001/http")
         res = client.add_json(fileJson)
+        print(res)
         return res['Hash']
 
     def create_request(self):
