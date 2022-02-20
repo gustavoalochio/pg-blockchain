@@ -10,3 +10,4 @@ markupsafe==1.1.1
 requests==2.23.0
 urllib3==1.25.8
 werkzeug==1.0.1
+ipfshttpclient==0.7.0

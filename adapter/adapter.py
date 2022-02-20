@@ -1,5 +1,5 @@
 from bridge import Bridge
-
+import ipfshttpclient
 
 class Adapter:
     base_url = 'http://root:root@runtime:8888/api/v1/wtps'
@@ -32,6 +32,11 @@ class Adapter:
         #     if self.to_param is not None:
         #         break
 
+    def upload_json(self, fileJson):
+        client = ipfshttpclient.connect("/ip4/ipfs/tcp/5001/http")
+        res = client.add_json(fileJson)
+        return res['Hash']
+
     def create_request(self):
         try:
             params = {
@@ -39,19 +44,21 @@ class Adapter:
             }
             response = self.bridge.request(self.base_url, params)
             data = response.json()[0]
+            hash = self.upload_json(data)
+            print(hash)
             print(data)
             print(data['addr'])
             # self.result = data
             # data['result'] = self.result
-            self.result_success(data)
+            self.result_success(hash)
         except Exception as e:
             self.result_error(e)
         finally:
             self.bridge.close()
 
-    def result_success(self, data):
+    def result_success(self, hash):
         self.result = {
-            'data': data['addr']
+            'data': hash
         }
 
     def result_error(self, error):
