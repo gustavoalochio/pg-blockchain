@@ -1,2 +1,4 @@
 chainlink/.env
 chainlink/chainlink-volume/*
+ipfs/data/*
+ipfs/export/*
