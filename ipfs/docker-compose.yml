@@ -4,7 +4,7 @@ services:
   ipfs:
     container_name: ipfs
 
-    image: ipfs/go-ipfs:latest
+    image: ipfs/go-ipfs:v0.8.0
 
     ports:
     - 4001:4001
