@@ -51,6 +51,7 @@ services:
     ports:
       - "8081:8081"
     environment:
+      - FLASK_ENV=development
       - IPFS_ADDR=/dns/ipfs/tcp/5001
     volumes:
       - ./adapter:/app
