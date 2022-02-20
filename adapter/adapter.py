@@ -9,6 +9,7 @@ class Adapter:
         self.id = input.get('id', '1')
         self.request_data = input.get('data')
         if self.validate_request_data():
+            print("Entrou")
             self.bridge = Bridge()
             self.set_params()
             self.create_request()
@@ -46,6 +47,7 @@ class Adapter:
             }
             response = self.bridge.request(self.base_url, params)
             data = response.json()[0]
+            print("debug")
             hash = self.upload_json(data)
             print(hash)
             print(data)
