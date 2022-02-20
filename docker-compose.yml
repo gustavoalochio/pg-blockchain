@@ -61,7 +61,7 @@ services:
   #Nó IPFS
   ipfs:
     container_name: ipfs
-    image: ipfs/go-ipfs:v0.8.0
+    image: ipfs/go-ipfs:v0.7.0
     ports:
       - "4001:4001"
       - "4001:4001/udp"
