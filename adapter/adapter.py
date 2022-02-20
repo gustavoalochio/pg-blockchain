@@ -1,5 +1,6 @@
 from bridge import Bridge
 import ipfshttpclient
+import json
 
 class Adapter:
     base_url = 'http://root:root@runtime:8888/api/v1/wtps'
@@ -33,12 +34,16 @@ class Adapter:
         #     if self.to_param is not None:
         #         break
 
-    def upload_json(self, fileJson):
-        print(fileJson)
-        client = ipfshttpclient.connect("/dns/ipfs/tcp/5001/http")
-        res = client.add_json(fileJson)
-        print(res)
-        return res['Hash']
+    def upload_json(self, stringJson):
+        print(stringJson)
+        hash = ''
+
+        with open('app.json', 'w') as fp:
+            json.dump(stringJson, fp)
+        with ipfshttpclient.connect("/dns/ipfs/tcp/5001/http") as client:
+            hash = client.add('app.json')['Hash']
+
+        return hash
 
     def create_request(self):
         try:
@@ -51,7 +56,7 @@ class Adapter:
             hash = self.upload_json(data)
             print(hash)
             print(data)
-            print(data['addr'])
+            #print(data['addr'])
             # self.result = data
             # data['result'] = self.result
             self.result_success(hash)
