@@ -8,11 +8,11 @@ contract ClientConsumer is ChainlinkClient, ConfirmedOwner {
   using Chainlink for Chainlink.Request;
 
   uint256 constant private ORACLE_PAYMENT = 1 * LINK_DIVISIBILITY;
-  bytes32 public message;
+  bytes public message;
 
   event RequestEthereumPriceFulfilled(
     bytes32 indexed requestId,
-    bytes32 indexed message
+    bytes indexed message
   );
 
   constructor() ConfirmedOwner(msg.sender){
@@ -29,7 +29,7 @@ contract ClientConsumer is ChainlinkClient, ConfirmedOwner {
     sendChainlinkRequestTo(_oracle, req, ORACLE_PAYMENT);
   }
 
-  function fulfill(bytes32 _requestId, bytes32 _message)
+  function fulfill(bytes32 _requestId, bytes memory _message)
     public
     recordChainlinkFulfillment(_requestId)
   {
