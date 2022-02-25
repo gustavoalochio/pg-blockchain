@@ -1,6 +1,7 @@
 from bridge import Bridge
 import ipfshttpclient
 import json
+import sys
 
 class Adapter:
     base_url = 'http://root:root@runtime:8888'
@@ -30,7 +31,8 @@ class Adapter:
         self.base_url = self.base_url + self.request_data.get('path')
 
     def upload_json(self, stringJson):
-        print(stringJson)
+        print(stringJson, file=sys.stdout)
+
         hash = ''
         
         with open('app.json', 'w') as fp:
@@ -45,8 +47,9 @@ class Adapter:
             response = self.bridge.request(self.base_url, self.params)
             data = response.json()[0]
             hash = self.upload_json(data)
-            print(hash)
-            print(data)
+            print(hash, file=sys.stdout)
+            print(data, file=sys.stdout)
+
             self.result_success(hash)
         except Exception as e:
             self.result_error(e)
