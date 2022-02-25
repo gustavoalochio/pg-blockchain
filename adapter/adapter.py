@@ -46,6 +46,10 @@ class Adapter:
 
     def create_request(self):
         try:
+
+            print(self.base_url, file=sys.stderr)
+            print(self.params, file=sys.stderr)
+
             response = self.bridge.request(self.base_url, self.params)
             data = response.json()[0]
             hash = self.upload_json(data)
