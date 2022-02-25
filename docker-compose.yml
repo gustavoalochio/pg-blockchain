@@ -15,7 +15,7 @@ services:
   ryu:
     build: ./5g-empower/ryu
     ports:
-      - "8080:8080"
+      - "8082:8080"
       - "6633:6633"
       - "6653:6653"
     depends_on:
@@ -65,7 +65,7 @@ services:
     ports:
       - "4001:4001"
       - "4001:4001/udp"
-      - "8082:8080"
+      - "8080:8080"
       - "5001:5001"
     volumes:
       - ./ifps/export:/export
