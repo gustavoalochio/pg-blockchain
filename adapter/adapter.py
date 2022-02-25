@@ -25,7 +25,7 @@ class Adapter:
 
     def set_param_and_url(self):
         self.params = {
-            '': self.self.request_data.get('id')
+            '': self.request_data.get('id')
         }
 
         self.base_url = self.base_url + self.request_data.get('path')
