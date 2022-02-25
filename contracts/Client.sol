@@ -8,9 +8,12 @@ contract ClientConsumer is ChainlinkClient, ConfirmedOwner {
   using Chainlink for Chainlink.Request;
 
   uint256 constant private ORACLE_PAYMENT = 1 * LINK_DIVISIBILITY;
-  bytes public message;
+  // bytes public message;
 
-  event RequestEthereumPriceFulfilled(
+  mapping(uint256 => bytes) public hashes;
+  uint256 totalHashes;
+
+  event RequestHashFullFilled(
     bytes32 indexed requestId,
     bytes indexed message
   );
@@ -19,12 +22,12 @@ contract ClientConsumer is ChainlinkClient, ConfirmedOwner {
     setPublicChainlinkToken();
   }
 
-  function requestHash(address _oracle, string memory _jobId)
+  function requestHash(address _oracle, string memory _jobId, string memory _path)
     public
     onlyOwner
   {
     Chainlink.Request memory req = buildChainlinkRequest(stringToBytes32(_jobId), address(this), this.fulfill.selector);
-    req.add("id", "{\"id\": 0,\"data\":{\"id\": \"00:0D:B9:2F:56:72\"}}");
+    req.add("path", _path);
     req.addInt("times", 100);
     sendChainlinkRequestTo(_oracle, req, ORACLE_PAYMENT);
   }
@@ -33,10 +36,13 @@ contract ClientConsumer is ChainlinkClient, ConfirmedOwner {
     public
     recordChainlinkFulfillment(_requestId)
   {
-    emit RequestEthereumPriceFulfilled(_requestId, _message);
-    message = _message;
-  }
+    emit RequestHashFullFilled(_requestId, _message);
 
+    bytes storage hash = hashes[totalHashes];
+    hash = _message;
+
+    totalHashes += 1;
+  }
 
   function getChainlinkToken() public view returns (address) {
     return chainlinkTokenAddress();

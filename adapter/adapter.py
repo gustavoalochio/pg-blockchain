@@ -3,16 +3,14 @@ import ipfshttpclient
 import json
 
 class Adapter:
-    base_url = 'http://root:root@runtime:8888/api/v1/wtps'
-    from_params = ['id']
+    base_url = 'http://root:root@runtime:8888'
 
     def __init__(self, input):
         self.id = input.get('id', '1')
         self.request_data = input.get('data')
         if self.validate_request_data():
-            print("Entrou")
             self.bridge = Bridge()
-            self.set_params()
+            self.set_param_and_url()
             self.create_request()
         else:
             self.result_error('No data provided')
@@ -24,20 +22,17 @@ class Adapter:
             return False
         return True
 
-    def set_params(self):
-        for param in self.from_params:
-            self.from_param = self.request_data.get(param)
-            if self.from_param is not None:
-                break
-        # for param in self.to_params:
-        #     self.to_param = self.request_data.get(param)
-        #     if self.to_param is not None:
-        #         break
+    def set_param_and_url(self):
+        self.params = {
+            '': self.self.request_data.get('id')
+        }
+
+        self.base_url = self.base_url + self.request_data.get('path')
 
     def upload_json(self, stringJson):
         print(stringJson)
         hash = ''
-
+        
         with open('app.json', 'w') as fp:
             json.dump(stringJson, fp)
         with ipfshttpclient.connect("/dns/ipfs/tcp/5001/http") as client:
@@ -47,18 +42,11 @@ class Adapter:
 
     def create_request(self):
         try:
-            params = {
-                '': self.from_param,
-            }
-            response = self.bridge.request(self.base_url, params)
+            response = self.bridge.request(self.base_url, self.params)
             data = response.json()[0]
-            print("debug")
             hash = self.upload_json(data)
             print(hash)
             print(data)
-            #print(data['addr'])
-            # self.result = data
-            # data['result'] = self.result
             self.result_success(hash)
         except Exception as e:
             self.result_error(e)
@@ -66,14 +54,7 @@ class Adapter:
             self.bridge.close()
 
     def result_success(self, hash):
-        self.result = {
-            'data': hash
-        }
+        self.result = hash
 
     def result_error(self, error):
-        self.result = {
-            'jobRunID': self.id,
-            'status': 'errored',
-            'error': f'There was an error: {error}',
-            'statusCode': 500,
-        }
+        self.result = ''
