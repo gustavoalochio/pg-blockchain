@@ -25,12 +25,9 @@ class Adapter:
             return False
         return True
 
-    def set_param_and_url(self):
-        self.params = {
-            '': self.request_data.get('id')
-        }
-
-        self.base_url = self.base_url + self.request_data.get('path')
+    def set_url(self):
+        #montar a url corrretamente aqui, validando para casos em que nao tem / ou tem sobrando
+        self.base_url = self.base_url + self.request_data.get('path') + self.request_data.get('id')
 
     def upload_json(self, stringJson):
         print(stringJson, file=sys.stderr)
@@ -46,11 +43,9 @@ class Adapter:
 
     def create_request(self):
         try:
-
             print(self.base_url, file=sys.stderr)
-            print(self.params, file=sys.stderr)
 
-            response = self.bridge.request(self.base_url, self.params)
+            response = self.bridge.request(self.base_url)
             data = response.json()[0]
             hash = self.upload_json(data)
             print(hash, file=sys.stderr)
