@@ -31,7 +31,7 @@ class Adapter:
         self.base_url = self.base_url + self.request_data.get('path')
 
     def upload_json(self, stringJson):
-        print(stringJson, file=sys.stdout)
+        print(stringJson, file=sys.stderr)
 
         hash = ''
         
@@ -47,8 +47,8 @@ class Adapter:
             response = self.bridge.request(self.base_url, self.params)
             data = response.json()[0]
             hash = self.upload_json(data)
-            print(hash, file=sys.stdout)
-            print(data, file=sys.stdout)
+            print(hash, file=sys.stderr)
+            print(data, file=sys.stderr)
 
             self.result_success(hash)
         except Exception as e:
