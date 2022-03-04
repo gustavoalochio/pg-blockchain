@@ -106,6 +106,7 @@ class Adapter:
 
     def upload_json(self, json):
         print(json, file=sys.stderr)
+        print(json.dumps(json), file=sys.stderr)
 
         hash = ''
     
