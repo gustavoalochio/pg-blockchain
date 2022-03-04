@@ -104,13 +104,13 @@ class Adapter:
         #montar a url corrretamente aqui
         self.base_url = self.base_url + self.request_data.get('path') + self.request_data.get('id')
 
-    def upload_json(self, stringJson):
-        print(stringJson, file=sys.stderr)
+    def upload_json(self, json):
+        print(json, file=sys.stderr)
 
         hash = ''
     
         with ipfshttpclient.connect("/dns/ipfs/tcp/5001/http") as client:
-            hash = client.add_str(stringJson)
+            hash = client.add_json(json)
 
         return hash
 
