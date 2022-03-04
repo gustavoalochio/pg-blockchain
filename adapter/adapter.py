@@ -108,11 +108,9 @@ class Adapter:
         print(stringJson, file=sys.stderr)
 
         hash = ''
-        
-        with open('app.json', 'w') as fp:
-            json.dump(stringJson, fp)
+    
         with ipfshttpclient.connect("/dns/ipfs/tcp/5001/http") as client:
-            hash = client.add('app.json')['Hash']
+            hash = client.add_str(stringJson)['Hash']
 
         return hash
 
