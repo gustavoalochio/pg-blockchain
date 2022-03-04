@@ -110,7 +110,7 @@ class Adapter:
         hash = ''
     
         with ipfshttpclient.connect("/dns/ipfs/tcp/5001/http") as client:
-            hash = client.add_str(str(stringJson))
+            hash = client.add_str(stringJson)
 
         return hash
 
