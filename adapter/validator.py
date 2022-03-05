@@ -12,7 +12,7 @@ class Validator:
 
         if self.validate_request_data():
             self.bridge = Bridge()
-            self.create_request()
+            self.logValidation()
         else:
             self.result_error('No data provided')
 
