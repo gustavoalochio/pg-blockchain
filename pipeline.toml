@@ -1,7 +1,7 @@
 type = "directrequest"
 schemaVersion = 1
 name = "example eth request event spec"
-contractAddress = "0xB3B1C0B011ED2aECBc058D945FA1fF4e55b14779"
+contractAddress = "0xd7719e51708AfDAd94CFfB9652A60fCDCE8DFCb8"
 maxTaskDuration = "0s"
 observationSource = """
 
@@ -14,7 +14,7 @@ observationSource = """
 
      my_bridge_task [type="bridge"
                 name="bridge-adpter"
-                requestData="{\\"id\\":  $(jobSpec.externalJobID),\\"data\\":{\\"id\\": $(decode_cbor.id)}}"
+                requestData="{\\"id\\":  $(jobSpec.externalJobID),\\"data\\":{\\"path\\": $(decode_cbor.path)}}"
                 ]
 encode_data  [type="ethabiencode" abi="(bytes32 requestId, bytes data)" 
     data="{ \\"requestId\\": $(decode_log.requestId), \\"data\\": $(my_bridge_task) }"]
@@ -24,7 +24,7 @@ encode_data  [type="ethabiencode" abi="(bytes32 requestId, bytes data)"
                   data="{\\"requestId\\": $(decode_log.requestId), \\"payment\\": $(decode_log.payment), \\"callbackAddress\\": $(decode_log.callbackAddr), \\"callbackFunctionId\\": $(decode_log.callbackFunctionId), \\"expiration\\": $(decode_log.cancelExpiration), \\"data\\": $(encode_data)}"
                  ]
 
-    submit_tx    [type=ethtx to="0xB3B1C0B011ED2aECBc058D945FA1fF4e55b14779" data="$(encode_tx)"]
+    submit_tx    [type=ethtx to="0xd7719e51708AfDAd94CFfB9652A60fCDCE8DFCb8" data="$(encode_tx)"]
 
     decode_log -> decode_cbor -> my_bridge_task -> encode_data -> encode_tx -> submit_tx
 """

@@ -1,6 +1,7 @@
 from flask import Flask, request, jsonify
 
 from adapter import Adapter
+from validator import Validator
 
 app = Flask(__name__)
 
@@ -17,6 +18,15 @@ def call_adapter():
     if data == '':
         data = {}
     adapter = Adapter(data)
+    return jsonify(adapter.result)
+
+
+@app.route('/validate', methods=['POST'])
+def checkHash():
+    data = request.get_json()
+    if data == '':
+        data = {}
+    adapter = Validator(data)
     return jsonify(adapter.result)
 
 

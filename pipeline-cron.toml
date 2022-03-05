@@ -1,0 +1,41 @@
+type            = "cron"
+schemaVersion   = 1
+schedule        = "CRON_TZ=UTC @every 1m"
+observationSource   = """
+
+    hash_encode_call  [type="ethabiencode"
+                abi="getHash()"
+                data=""]
+
+    hash_call          [type="ethcall"
+                contract="0xa36085F69e2889c224210F603D836748e7dC0088"
+                data="$(hash_encode_call)"]
+
+    hash_decode_result [type="ethabidecode"
+                abi="bytes hashIpfs"
+                data="$(hash_call)"]
+
+
+    path_encode_call  [type="ethabiencode"
+                abi="getPath()"
+                data=""]
+
+    path_call          [type="ethcall"
+                contract="0xa36085F69e2889c224210F603D836748e7dC0088"
+                data="$(path_encode_call)"]
+
+    path_decode_result [type="ethabidecode"
+                abi="string path"
+                data="$(path_call)"]
+
+    medianize_data [type="median"]
+
+    my_bridge_task [type="bridge"
+                name="validate-bridge"
+                requestData="{ "data\\": $(medianize_data) }"
+                ]
+
+    hash_encode_call -> hash_call -> hash_decode_result -> medianize_data
+    path_encode_call -> path_call -> path_decode_result -> medianize_data
+    medianize_data -> my_bridge_task
+"""

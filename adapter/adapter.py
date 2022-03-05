@@ -100,10 +100,6 @@ class Adapter:
             return False
         return True
 
-    def set_url(self):
-        #montar a url corrretamente aqui
-        self.base_url = self.base_url + self.request_data.get('path') + self.request_data.get('id')
-
     def upload_json(self, jsonDict):
         print(jsonDict, file=sys.stderr)
         print(json.dumps(jsonDict), file=sys.stderr)
@@ -112,7 +108,7 @@ class Adapter:
         hash = ''
     
         with ipfshttpclient.connect("/dns/ipfs/tcp/5001/http") as client:
-            hash = client.add_str("teste")
+            hash = client.add_str(json.dumps(jsonDict))
 
         return hash
 
@@ -120,7 +116,7 @@ class Adapter:
         try:
             print(self.base_url, file=sys.stderr)
 
-            response = self.bridge.request(self.base_url)
+            response = self.bridge.request(self.base_url + self.request_data.get('path'))
             data = response.json()
             print(data, file=sys.stderr)
 
