@@ -25,18 +25,16 @@ class Validator:
 
     def logValidation(self):
         try:
-            print(self.request_data, file=sys.stderr)
+            self.result_success(self.request_data)
 
         except Exception as e:
             self.result_error(e)
         finally:
             self.bridge.close()
 
-    def result_success(self, hash):
-        print("Rota:"  , file=sys.stderr)
+    def result_success(self, data):
+        print(data, file=sys.stderr)
 
     def result_error(self, error):
-        self.result = {
-            'hash': '',
-            'route': ''
-        }
+        print(self.request_data , file=sys.stderr)
+
