@@ -108,7 +108,8 @@ class Adapter:
     
         with ipfshttpclient.connect("/dns/ipfs/tcp/5001/http") as client:
             hash = client.add_str(json.dumps(jsonDict))
-
+            client.pin.ls(type='all')
+            
         return hash
 
     def create_request(self):
