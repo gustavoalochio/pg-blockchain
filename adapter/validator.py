@@ -27,15 +27,14 @@ class Validator:
         try:
             print(self.request_data, file=sys.stderr)
             self.result_success(self.request_data)
-
         except Exception as e:
             self.result_error(e)
         finally:
             self.bridge.close()
 
     def result_success(self, data):
-        self.result = self.request_data
+        self.result = "SUCESSO"
 
     def result_error(self, error):
-        self.result = self.request_data
+        self.result = "ERROR"
 

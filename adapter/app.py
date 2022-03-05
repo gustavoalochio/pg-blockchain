@@ -26,8 +26,8 @@ def checkHash():
     data = request.get_json()
     if data == '':
         data = {}
-    adapter = Validator(data)
-    return jsonify(adapter.result)
+    validator = Validator(data)
+    return jsonify(validator.result)
 
 
 if __name__ == '__main__':
