@@ -34,7 +34,7 @@ services:
       # [PATH_TO_POSTGRES_DATA]:/var/lib/postgressql/data/
       - ./chainlink/chainlink-volume/data/:/var/lib/postgresql/data/
   chainlink:
-    image: "smartcontract/chainlink:1.0.0"
+    image: "smartcontract/chainlink:1.2.0"
     env_file: ./chainlink/.env
     depends_on:
       - pg_chainlink
