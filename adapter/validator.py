@@ -25,6 +25,7 @@ class Validator:
 
     def logValidation(self):
         try:
+            print(self.request_data, file=sys.stderr)
             self.result_success(self.request_data)
 
         except Exception as e:
@@ -33,8 +34,8 @@ class Validator:
             self.bridge.close()
 
     def result_success(self, data):
-        print(data, file=sys.stderr)
+        self.result = self.request_data
 
     def result_error(self, error):
-        print(self.request_data , file=sys.stderr)
+        self.result = self.request_data
 
