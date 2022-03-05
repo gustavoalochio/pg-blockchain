@@ -88,7 +88,6 @@ class Adapter:
 
         if self.validate_request_data():
             self.bridge = Bridge()
-            self.set_url()
             self.create_request()
         else:
             self.result_error('No data provided')
