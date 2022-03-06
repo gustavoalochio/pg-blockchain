@@ -39,7 +39,7 @@ class Validator:
             print(self.request_data, file=sys.stderr)
 
             #GET IPFS JSON
-            hashIpfs = self.request_data['hashIpfs']
+            hashIpfs = self.request_data['hashIpfs'].strip().replace("\"","")
 
             if not hashIpfs or not hashIpfs.startswith('Qm'):
                 self.result_error("")
