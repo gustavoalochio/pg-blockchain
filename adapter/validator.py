@@ -39,8 +39,8 @@ class Validator:
             print(self.request_data, file=sys.stderr)
 
             #GET IPFS JSON
-            hashIpfs = bytes(self.request_data['hashIpfs']).decode("utf-8")
-
+            hashIpfs = self.request_data['hashIpfs']
+            
             if not hashIpfs or not hashIpfs.startswith('Qm'):
                 self.result_error("")
 

@@ -42,8 +42,8 @@ contract Validator is ChainlinkClient, ConfirmedOwner {
         oracle = _oracle;
     }
 
-    function getHash() public view returns (bytes memory) {       
-        return hashIpfs;       
+    function getHash() public view returns (string memory) {       
+        return string(hashIpfs);       
     } 
 
     function getPath() public view returns (string memory) {       
