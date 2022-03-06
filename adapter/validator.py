@@ -36,7 +36,7 @@ class Validator:
 
     def logValidation(self):
         try:
-            print(self.request_data, file=sys.stderr)
+            # print(self.request_data, file=sys.stderr)
 
             #GET IPFS JSON
             hashIpfs = self.request_data['hashIpfs'].strip().replace("\"","")
@@ -46,12 +46,12 @@ class Validator:
 
             url = self.ipfs_url + hashIpfs
             jsonIpfs = self.bridge.request(url).json()
-            print(jsonIpfs, file=sys.stderr)
+            # print(jsonIpfs, file=sys.stderr)
 
             #GET API JSON
             url = self.base_url + self.request_data['path']
             jsonApi = self.bridge.request(url).json()
-            print(jsonApi, file=sys.stderr)
+            # print(jsonApi, file=sys.stderr)
 
             if(jsonIpfs == jsonApi):
                 self.result_success(self.request_data['path'])

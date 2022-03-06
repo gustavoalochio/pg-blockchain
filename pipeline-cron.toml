@@ -1,20 +1,19 @@
-type = "cron"
-schemaVersion = 1
+type            = "cron"
+schemaVersion   = 1
 name = "Validator Slice 1"
-maxTaskDuration = "0s"
-schedule = "CRON_TZ=UTC @every 0m10s"
-observationSource = """
+schedule        = "CRON_TZ=UTC @every 0m10s"
+observationSource   = """
 
     hash_encode_call  [type="ethabiencode"
                 abi="getHash()"
                 data=""]
 
     hash_call          [type="ethcall"
-                contract="0x4DD5A36A01868FD5B9D1028244F1aA0b5cC0DA01"
+                contract="0x5DFA168a9e089b3FEc11f5ADCbE54D922D294D44"
                 data="$(hash_encode_call)"]
 
     hash_decode_result [type="ethabidecode"
-                abi="bytes hashIpfs"
+                abi="string hashIpfs"
                 data="$(hash_call)"]
 
     path_encode_call  [type="ethabiencode"
@@ -22,7 +21,7 @@ observationSource = """
                 data=""]
 
     path_call [type="ethcall"
-                contract="0x4DD5A36A01868FD5B9D1028244F1aA0b5cC0DA01"
+                contract="0x5DFA168a9e089b3FEc11f5ADCbE54D922D294D44"
                 data="$(path_encode_call)"]
 
     path_decode_result [type="ethabidecode"

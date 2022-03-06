@@ -10,8 +10,7 @@ contract Validator is ChainlinkClient, ConfirmedOwner {
     uint256 constant private ORACLE_PAYMENT = 1 * LINK_DIVISIBILITY;
 
     string path;
-    bool isValid;
-    bytes hashIpfs;
+    string hashIpfs;
 
     address oracle;
     string jobId;
@@ -43,7 +42,7 @@ contract Validator is ChainlinkClient, ConfirmedOwner {
     }
 
     function getHash() public view returns (string memory) {       
-        return string(hashIpfs);       
+        return hashIpfs;       
     } 
 
     function getPath() public view returns (string memory) {       
@@ -70,7 +69,7 @@ contract Validator is ChainlinkClient, ConfirmedOwner {
         recordChainlinkFulfillment(_requestId)
     {
         emit RequestHashFullFilled(_requestId, _message);
-        hashIpfs = _message;
+        hashIpfs = string(_message);
     }
 
 
