@@ -56,7 +56,7 @@ class Validator:
             if(jsonIpfs == jsonApi):
                 self.result_success(self.request_data['path'])
             else:
-                self.result_success(self.request_data['path'])
+                self.result_error(self.request_data['path'])
 
         except Exception as e:
             self.result_error(e)
