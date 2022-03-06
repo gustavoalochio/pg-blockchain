@@ -1,41 +1,40 @@
-type            = "cron"
-schemaVersion   = 1
-schedule        = "CRON_TZ=UTC @every 1m"
-observationSource   = """
+type = "cron"
+schemaVersion = 1
+name = "Validator Slice 1"
+maxTaskDuration = "0s"
+schedule = "CRON_TZ=UTC @every 0m10s"
+observationSource = """
 
     hash_encode_call  [type="ethabiencode"
                 abi="getHash()"
                 data=""]
 
     hash_call          [type="ethcall"
-                contract="0xa36085F69e2889c224210F603D836748e7dC0088"
+                contract="0x4DD5A36A01868FD5B9D1028244F1aA0b5cC0DA01"
                 data="$(hash_encode_call)"]
 
     hash_decode_result [type="ethabidecode"
                 abi="bytes hashIpfs"
                 data="$(hash_call)"]
 
-
     path_encode_call  [type="ethabiencode"
                 abi="getPath()"
                 data=""]
 
-    path_call          [type="ethcall"
-                contract="0xa36085F69e2889c224210F603D836748e7dC0088"
+    path_call [type="ethcall"
+                contract="0x4DD5A36A01868FD5B9D1028244F1aA0b5cC0DA01"
                 data="$(path_encode_call)"]
 
     path_decode_result [type="ethabidecode"
                 abi="string path"
                 data="$(path_call)"]
 
-    medianize_data [type="median"]
 
     my_bridge_task [type="bridge"
                 name="validate-bridge"
-                requestData="{ "data\\": $(medianize_data) }"
+                requestData="{ \\"data\\": { \\"hashIpfs\\": $(hash_decode_result.hashIpfs), \\"path\\": $(path_decode_result.path) }}"
                 ]
 
-    hash_encode_call -> hash_call -> hash_decode_result -> medianize_data
-    path_encode_call -> path_call -> path_decode_result -> medianize_data
-    medianize_data -> my_bridge_task
+    hash_encode_call -> hash_call -> hash_decode_result -> my_bridge_task
+    path_encode_call -> path_call -> path_decode_result  -> my_bridge_task
 """
