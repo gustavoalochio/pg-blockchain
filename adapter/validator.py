@@ -27,11 +27,11 @@ class Validator:
         return True
 
     def result_success(self, path):
-        print("SUCCESS: Rota: " + path + " verificada!", file=sys.stderr)
+        print("SUCCESS: Rota: " + str(path) + " verificada!", file=sys.stderr)
         self.result = "SUCCESS: Rota: " + path + " verificada!"
 
     def result_error(self, path):
-        print("ERROR: Rota: " + path + " corrompida!", file=sys.stderr)
+        print("ERROR: Rota: " + str(path) + " corrompida!", file=sys.stderr)
         self.result = "ERROR: Rota: " + path + " corrompida!"
 
     def logValidation(self):
